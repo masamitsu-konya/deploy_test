@@ -66,5 +66,5 @@ server 'ec2-52-68-69-102.ap-northeast-1.compute.amazonaws.com', user: 'masamitsu
 roles: %w{web app db}  #何サーバーの処理を書くか。今回は同じサーバーで全部動かすのでweb app db全て指定
 #sshでEC２に入るのに必要
 set :ssh_options, {
-   keys: [File.expand_path('~/Documents/keys/saki_aws.pem)')]
+   keys: [File.expand_path('~/.ssh/saki_aws.pem)')]
 }
