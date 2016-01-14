@@ -2,7 +2,14 @@
 lock '3.4.0'
 
 set :application, 'deploy_test'
-set :repo_url, 'git@example.com:me/my_repo.git'
+set :repo_url, 'git@github.com:masamitsu-konya/deploy_test.git'
+set :branch, 'master'
+set :deploy_to, '/var/www/deploy_test'
+set :rbenv_type, :user
+set :rbenv_ruby, '2.3.0p0'
+set :rbenv_map_bins, %w{rake gem bundle ruby rails}
+set :rbenv_roles, :all
+set :linked_dirs, %w{bin log tmp/backup tmp/pids tmp/cache tmp/sockets vendor/bundle}
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
@@ -32,9 +39,14 @@ set :repo_url, 'git@example.com:me/my_repo.git'
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 
 # Default value for keep_releases is 5
-# set :keep_releases, 5
+set :keep_releases, 5
 
+after 'deploy:publishing', 'deploy:restart'
 namespace :deploy do
+
+  task :restart do
+    invoke 'unicorn:restart'
+  end
 
   after :restart, :clear_cache do
     on roles(:web), in: :groups, limit: 3, wait: 10 do

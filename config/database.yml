@@ -49,6 +49,7 @@ test:
 #
 production:
   <<: *default
-  database: deploy_test_production
-  username: deploy_test
-  password: <%= ENV['DEPLOY_TEST_DATABASE_PASSWORD'] %>
+  database: deploy_test
+  username: masamitsu
+  password: ChiakiKonya1101
+  host:     ec2-52-68-69-102.ap-northeast-1.compute.amazonaws.com
